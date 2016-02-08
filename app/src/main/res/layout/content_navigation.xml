@@ -12,8 +12,4 @@
     tools:context="group19.hbv2.tvtrack.NavigationActivity"
     tools:showIn="@layout/app_bar_navigation">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!" />
 </RelativeLayout>
