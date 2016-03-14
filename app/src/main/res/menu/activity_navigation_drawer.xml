@@ -7,17 +7,17 @@
             android:icon="@drawable/ic_action_search"
             android:title="Search"/>
         <item
-            android:id="@+id/nav_add"
+            android:id="@+id/nav_popular"
             android:icon="@drawable/ic_action_important"
-            android:title="Add" />
+            android:title="Popular" />
         <item
-            android:id="@+id/nav_remove"
-            android:icon="@drawable/ic_action_discard"
-            android:title="Remove" />
+            android:id="@+id/nav_genres"
+            android:icon="@drawable/ic_action_labels"
+            android:title="Genres" />
         <item
-            android:id="@+id/nav_viewlist"
+            android:id="@+id/nav_tracker"
             android:icon="@drawable/ic_action_view_as_list"
-            android:title="View List" />
+            android:title="Tracker" />
     </group>
 
     <item android:title="Communicate">
