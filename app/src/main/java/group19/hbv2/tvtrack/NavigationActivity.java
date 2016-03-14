@@ -134,17 +134,11 @@ public class NavigationActivity extends AppCompatActivity
             dialog.show();
 
 
-        } else if (id == R.id.nav_add) {
-            Context context = getApplicationContext();
-            CharSequence text = "Hello toast!";
-            int duration = Toast.LENGTH_SHORT;
+        } else if (id == R.id.nav_popular) {
 
-            Toast toast = Toast.makeText(context, text, duration);
-            toast.show();
+        } else if (id == R.id.nav_genres) {
 
-        } else if (id == R.id.nav_remove) {
-
-        } else if (id == R.id.nav_viewlist) {
+        } else if (id == R.id.nav_tracker) {
 
         } else if (id == R.id.nav_share) {
 
