@@ -4,9 +4,11 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -24,6 +26,17 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
+import java.util.List;
+
+import dalvik.annotation.TestTarget;
+import info.movito.themoviedbapi.TmdbApi;
+import info.movito.themoviedbapi.TmdbMovies;
+import info.movito.themoviedbapi.TmdbSearch;
+import info.movito.themoviedbapi.TmdbTV;
+import info.movito.themoviedbapi.TvResultsPage;
+import info.movito.themoviedbapi.model.MovieDb;
+import info.movito.themoviedbapi.model.tv.TvSeries;
+
 public class NavigationActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -32,6 +45,7 @@ public class NavigationActivity extends AppCompatActivity
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
     private GoogleApiClient client;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,39 +116,35 @@ public class NavigationActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_search) {
-            // Handler for search request
-            // 1. Instantiate an AlertDialog.Builder with its constructor
+
+            // Get the search view and user text input field
+            View view = LayoutInflater.from(this).inflate(R.layout.dialog_navigation, null);
+            final EditText input = (EditText)view.findViewById(R.id.search_input);
+
+            //Create search dialog
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            LayoutInflater inflater = this.getLayoutInflater();
-
-
-            // 2. Chain together various setter methods to set the dialog characteristics
+            builder.setView(view);
             builder.setTitle("Search");
-
-            //
-            builder.setView(inflater.inflate(R.layout.dialog_navigation, null));
-
-
-            //
             builder.setPositiveButton(R.string.action_search, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
-                    //todo: use api to search tmdb
-                    Context context = getApplicationContext();
-                    CharSequence text = "todo: search";
-                    int duration = Toast.LENGTH_SHORT;
 
-                    Toast toast = Toast.makeText(context, text, duration);
-                    toast.show();
+                    //Run Search AsyncTask bc we don't want any processing in UI thread
+                    new SearchTask().execute(input.getText().toString());
                 }
             });
 
-
-            // 3. Get the AlertDialog from create()
+            //Display search dialog on screen
             AlertDialog dialog = builder.create();
             dialog.show();
 
 
         } else if (id == R.id.nav_popular) {
+            Context context = getApplicationContext();
+            CharSequence text = "Hello toast!";
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
 
         } else if (id == R.id.nav_genres) {
 
@@ -188,4 +198,24 @@ public class NavigationActivity extends AppCompatActivity
         AppIndex.AppIndexApi.end(client, viewAction);
         client.disconnect();
     }
+
+    private class SearchTask extends AsyncTask<String, Integer, List<TvSeries>> {
+
+        @Override
+        protected List<TvSeries> doInBackground(String... params) {
+            String series = params[0];
+            TmdbApi api = new TmdbApi("890f633bdd8840cfdedc2b942c601007");
+            List<TvSeries> result = api.getSearch().searchTv(series, null, null).getResults();
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(List<TvSeries> result) {
+            Log.d("====TVSEARCH====", result.get(0).getOverview());
+            //todo: Display results in results activity
+        }
+    }
+
+
+
 }
