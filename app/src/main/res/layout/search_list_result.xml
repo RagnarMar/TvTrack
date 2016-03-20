@@ -9,15 +9,18 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Results"
-        android:id="@+id/textView2"
+        android:id="@+id/resultName"
         android:layout_gravity="center_horizontal"
         android:layout_weight="0.02"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        />
 
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/tvResultList"
         android:layout_gravity="center_horizontal"
-        android:layout_weight="0.02" />
+        android:layout_weight="0.02"
+        />
+
 </LinearLayout>
