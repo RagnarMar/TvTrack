@@ -3,6 +3,7 @@ package group19.hbv2.tvtrack;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -28,13 +29,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.util.List;
 
-import dalvik.annotation.TestTarget;
 import info.movito.themoviedbapi.TmdbApi;
-import info.movito.themoviedbapi.TmdbMovies;
-import info.movito.themoviedbapi.TmdbSearch;
-import info.movito.themoviedbapi.TmdbTV;
-import info.movito.themoviedbapi.TvResultsPage;
-import info.movito.themoviedbapi.model.MovieDb;
 import info.movito.themoviedbapi.model.tv.TvSeries;
 
 public class NavigationActivity extends AppCompatActivity
@@ -211,10 +206,16 @@ public class NavigationActivity extends AppCompatActivity
 
         @Override
         protected void onPostExecute(List<TvSeries> result) {
-            Log.d("====TVSEARCH====", result.get(0).getOverview());
-            //todo: Display results in results activity
-        }
+            Intent search = new Intent();
+            search.setClass(getApplicationContext(), SearchResultActivity.class);
+            TvSeriesBundle bundle = new TvSeriesBundle(result);
+            search.putExtra("SearchResult", bundle);
+            startActivity(search);
+            finish();
+      }
     }
+
+
 
 
 
