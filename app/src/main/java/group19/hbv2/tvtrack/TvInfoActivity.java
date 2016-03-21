@@ -24,6 +24,12 @@ public class TvInfoActivity extends Activity {
         TextView tvName = (TextView) findViewById(R.id.seriesName);
         tvName.setText(show.getName());
 
+        TextView tvYear = (TextView) findViewById(R.id.seriesYear);
+        tvYear.setText(show.getFirstAirDate());
+
+        TextView tvSeasons = (TextView) findViewById(R.id.seriesSeasons);
+        tvSeasons.setText("Number of seasons" + show.getNumberOfSeasons());
+
         TextView tvOverview = (TextView) findViewById(R.id.seriesOverview);
         tvOverview.setText(show.getOverview());
 

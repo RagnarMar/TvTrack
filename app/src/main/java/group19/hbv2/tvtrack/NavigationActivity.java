@@ -135,15 +135,27 @@ public class NavigationActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_popular) {
             Context context = getApplicationContext();
-            CharSequence text = "Hello toast!";
+            CharSequence text = "Hello popular!";
             int duration = Toast.LENGTH_SHORT;
 
             Toast toast = Toast.makeText(context, text, duration);
             toast.show();
 
         } else if (id == R.id.nav_genres) {
+            Context context = getApplicationContext();
+            CharSequence text = "Hello genres!";
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
 
         } else if (id == R.id.nav_tracker) {
+            Context context = getApplicationContext();
+            CharSequence text = "Hello tracker!";
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
 
         } else if (id == R.id.nav_share) {
 
