@@ -3,6 +3,15 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
+    <ImageView
+        android:id="@+id/tvIcon"
+        android:layout_width="22px"
+        android:layout_height="22px"
+        android:layout_marginLeft="4px"
+        android:layout_marginRight="10px"
+        android:layout_marginTop="4px"
+        android:src="@drawable/ic_action_search" >
+    </ImageView>
 
     <TextView
         android:layout_width="wrap_content"
