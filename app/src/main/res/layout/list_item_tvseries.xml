@@ -4,6 +4,43 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="60dp"
+        android:minHeight="80dp"
+        android:background="@drawable/ic_action_search"
+        android:layout_alignParentLeft="true"
+        android:id="@+id/list_item_tvseries_poster_image_view">
+    </ImageView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:textSize="20dp"
+        android:paddingBottom="4dp"
+        android:layout_toRightOf="@+id/list_item_tvseries_poster_image_view"
+        android:id="@+id/list_item_tvseries_name_text_view"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:text="Year"
+        android:layout_toRightOf="@+id/list_item_tvseries_poster_image_view"
+        android:layout_below="@+id/list_item_tvseries_name_text_view"
+        android:id="@+id/list_item_tvseries_year_text_view"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:text="Rating"
+        android:layout_below="@+id/list_item_tvseries_name_text_view"
+        android:layout_toRightOf="@+id/list_item_tvseries_year_text_view"
+        android:id="@+id/list_item_tvseries_rating_text_view"/>
+
     <CheckBox
         android:id="@+id/list_item_tvseries_tracking_check_box"
         android:layout_width="wrap_content"
@@ -11,22 +48,5 @@
         android:layout_alignParentRight="true"
         android:padding="4dp"/>
 
-    <TextView
-        android:id="@+id/list_item_tvseries_name_text_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_toLeftOf="@id/list_item_tvseries_tracking_check_box"
-        android:textStyle="bold"
-        tools:text="Tv show name"
-        android:padding="4dp"/>
-
-    <TextView
-        android:id="@+id/list_item_tvseries_rating_text_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_toLeftOf="@id/list_item_tvseries_tracking_check_box"
-        android:layout_below="@id/list_item_tvseries_name_text_view"
-        tools:text="Tv show rating"
-        android:padding="4dp"/>
 
 </RelativeLayout>

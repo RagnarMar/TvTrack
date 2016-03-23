@@ -63,6 +63,8 @@ public class TvSeriesAdapter extends RecyclerView.Adapter<TvSeriesAdapter.TvSeri
         private CheckBox mTrackCheckBox;
         private TextView mNameTextView;
         private TextView mRatingTextView;
+        private TextView mYearTextView;
+        private ImageView mPosterImageView;
         private TvSeries mTvSeries;
 
         public TvSeriesHolder(View view) {
@@ -89,16 +91,22 @@ public class TvSeriesAdapter extends RecyclerView.Adapter<TvSeriesAdapter.TvSeri
 
             mNameTextView = (TextView) view.findViewById(R.id.list_item_tvseries_name_text_view);
             mRatingTextView = (TextView) view.findViewById(R.id.list_item_tvseries_rating_text_view);
+            mYearTextView = (TextView) view.findViewById(R.id.list_item_tvseries_year_text_view);
+            mPosterImageView = (ImageView) view.findViewById(R.id.list_item_tvseries_poster_image_view);
+
+
         }
 
         public void bindTvSeries(TvSeries tvSeries) {
             mTvSeries = tvSeries;
 
-            String name = tvSeries.getName();
-            float rating = tvSeries.getUserRating();
-
-            mNameTextView.setText(name);
-            mRatingTextView.setText("Rating: " + rating);
+            mNameTextView.setText(tvSeries.getName());
+            mRatingTextView.setText("Rating: " + tvSeries.getVoteAverage());
+            mYearTextView.setText(tvSeries.getFirstAirDate());
+            Picasso.with(mContext)
+                    .load("https://image.tmdb.org/t/p/w185/" + tvSeries.getPosterPath())
+                    .fit()
+                    .into(mPosterImageView);
             mTrackCheckBox.setText("Track");
         }
 
