@@ -223,7 +223,6 @@ public class NavigationActivity extends AppCompatActivity
             TvSeriesBundle bundle = new TvSeriesBundle(result);
             search.putExtra("SearchResult", bundle);
             startActivity(search);
-            finish();
       }
     }
 

@@ -72,7 +72,6 @@ public class SearchResultActivity extends Activity {
             TvSeriesBundle bundle = new TvSeriesBundle(tvlist);
             search.putExtra("TvInfo", bundle);
             startActivity(search);
-            finish();
         }
     }
 }
