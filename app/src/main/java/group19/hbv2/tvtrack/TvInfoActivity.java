@@ -37,8 +37,8 @@ public class TvInfoActivity extends Activity {
         tvOverview.setText(show.getOverview());
 
         ImageView posterView = (ImageView) findViewById(R.id.posterView);
-        Picasso.with(getActivity())
-                .load("https://image.tmdb.org/t/p/w185/" + tvName.getPosterPath())
+        Picasso.with(this)
+                .load("https://image.tmdb.org/t/p/w185/" + show.getPosterPath())
                 .into(posterView);
 
     }
