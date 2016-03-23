@@ -78,9 +78,17 @@ public class SearchResultActivity extends Activity {
             private CheckBox mTrackCheckBox;
             private TextView mNameTextView;
             private TextView mRatingTextView;
+            private TvSeries mTvSeries;
 
             public TvSeriesHolder(View view) {
                 super(view);
+
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        new GetTvTask().execute(mTvSeries.getId());
+                    }
+                });
 
                 mTrackCheckBox = (CheckBox) view.findViewById(R.id.list_item_tvseries_tracking_check_box);
                 mNameTextView = (TextView) view.findViewById(R.id.list_item_tvseries_name_text_view);
@@ -88,6 +96,7 @@ public class SearchResultActivity extends Activity {
             }
 
             public void bindTvSeries(TvSeries tvSeries) {
+                mTvSeries = tvSeries;
                 String name = tvSeries.getName();
                 float rating = tvSeries.getUserRating();
 
@@ -111,14 +120,11 @@ public class SearchResultActivity extends Activity {
 
         @Override
         protected void onPostExecute(TvSeries result) {
-            Intent search = new Intent();
-            search.setClass(getApplicationContext(), TvInfoActivity.class);
             List<TvSeries> tvlist = new ArrayList<TvSeries>();
             tvlist.add(result);
             TvSeriesBundle bundle = new TvSeriesBundle(tvlist);
-            search.putExtra("TvInfo", bundle);
-            startActivity(search);
-            finish();
+            Intent intent = TvInfoActivity.newIntent(SearchResultActivity.this, bundle);
+            startActivity(intent);
         }
     }
 }
