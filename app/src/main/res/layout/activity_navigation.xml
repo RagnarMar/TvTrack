@@ -8,6 +8,15 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
+    <android.support.v7.widget.RecyclerView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/navigation_recycler_view"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v7.widget.RecyclerView>
+
     <include
         layout="@layout/app_bar_navigation"
         android:layout_width="match_parent"
