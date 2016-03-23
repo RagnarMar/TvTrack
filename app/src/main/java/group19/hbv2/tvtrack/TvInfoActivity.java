@@ -3,7 +3,10 @@ package group19.hbv2.tvtrack;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import info.movito.themoviedbapi.model.tv.TvSeries;
 
@@ -25,14 +28,18 @@ public class TvInfoActivity extends Activity {
         tvName.setText(show.getName());
 
         TextView tvYear = (TextView) findViewById(R.id.seriesYear);
-        tvYear.setText(show.getFirstAirDate());
+        tvYear.setText("First aired: " + show.getFirstAirDate());
 
         TextView tvSeasons = (TextView) findViewById(R.id.seriesSeasons);
-        tvSeasons.setText("Number of seasons" + show.getNumberOfSeasons());
+        tvSeasons.setText("Number of seasons: " + show.getNumberOfSeasons());
 
         TextView tvOverview = (TextView) findViewById(R.id.seriesOverview);
         tvOverview.setText(show.getOverview());
 
+        ImageView posterView = (ImageView) findViewById(R.id.posterView);
+        Picasso.with(this)
+                .load("https://image.tmdb.org/t/p/w185/" + show.getPosterPath())
+                .into(posterView);
 
     }
 
