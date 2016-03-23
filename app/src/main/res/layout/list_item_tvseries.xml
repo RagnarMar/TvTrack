@@ -11,6 +11,7 @@
         android:minHeight="80dp"
         android:background="@drawable/ic_action_search"
         android:layout_alignParentLeft="true"
+        android:paddingBottom="1dp"
         android:id="@+id/list_item_tvseries_poster_image_view">
     </ImageView>
 
