@@ -102,7 +102,7 @@ public class TvSeriesAdapter extends RecyclerView.Adapter<TvSeriesAdapter.TvSeri
 
             mNameTextView.setText(tvSeries.getName());
             mRatingTextView.setText("Rating: " + tvSeries.getVoteAverage());
-            mYearTextView.setText(tvSeries.getFirstAirDate());
+            mYearTextView.setText("Aired: " + tvSeries.getFirstAirDate());
             Picasso.with(mContext)
                     .load("https://image.tmdb.org/t/p/w185/" + tvSeries.getPosterPath())
                     .fit()
