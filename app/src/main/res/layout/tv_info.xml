@@ -3,29 +3,62 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="369dp"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text= "Dummy text"
-        android:id="@+id/seriesName"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="0.02"
-        android:textAlignment="center"
-        />
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="80dp"
+            android:minHeight="120dp"
+            android:id="@+id/posterView"
+            android:scaleType="centerCrop"
+            android:background="@mipmap/ic_launcher"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text= "Dummy text - name"
+                android:id="@+id/seriesName"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="0.02"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Dummy - year"
+                android:id="@+id/seriesYear"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Dummy - seasons"
+                android:id="@+id/seriesSeasons"/>
+
+        </LinearLayout>
+    </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text= "Dummy text"
+        android:text= "Dummy text - overview"
         android:id="@+id/seriesOverview"
         android:layout_gravity="center_horizontal"
         android:layout_weight="0.02"
         android:textAlignment="center"
         />
-
-
 
 </LinearLayout>
