@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import group19.hbv2.tvtrack.model.TvSeriesManager;
+import group19.hbv2.tvtrack.model.TvSeriesWrapper;
 import info.movito.themoviedbapi.TmdbApi;
 import info.movito.themoviedbapi.model.tv.TvSeries;
 
@@ -59,9 +60,9 @@ public class NavigationActivity extends AppCompatActivity
         mRecyclerView = (RecyclerView) findViewById(R.id.navigation_recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        List<TvSeries> tvSeriesList = TvSeriesManager.get(this).getTvSeriesList();
-        for (TvSeries tvSeries: tvSeriesList) {
-            Log.d(TAG, tvSeries.getName());
+        List<TvSeriesWrapper> tvSeriesList = TvSeriesManager.get(this).getTvSeriesList();
+        for (TvSeriesWrapper tvSeries: tvSeriesList) {
+            Log.d(TAG, tvSeries.getName() + " id: " + tvSeries.getId());
         }
         mAdapter = new TvSeriesAdapter(this, tvSeriesList);
         mRecyclerView.setAdapter(mAdapter);
@@ -86,6 +87,14 @@ public class NavigationActivity extends AppCompatActivity
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        List<TvSeriesWrapper> tvSeriesList = TvSeriesManager.get(this).getTvSeriesList();
+        mAdapter.setTvSeriesList(tvSeriesList);
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override

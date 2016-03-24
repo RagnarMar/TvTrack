@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import group19.hbv2.tvtrack.model.TvSeriesManager;
+import group19.hbv2.tvtrack.model.TvSeriesWrapper;
 import info.movito.themoviedbapi.TmdbApi;
 import info.movito.themoviedbapi.model.Artwork;
 import info.movito.themoviedbapi.model.tv.TvSeries;
@@ -33,10 +34,10 @@ import info.movito.themoviedbapi.model.tv.TvSeries;
  * Created by agustis on 20.3.2016.
  */
 public class TvSeriesAdapter extends RecyclerView.Adapter<TvSeriesAdapter.TvSeriesHolder> {
-    private List<TvSeries> mTvSeriesList;
+    private List<TvSeriesWrapper> mTvSeriesList;
     private Context mContext;
 
-    public TvSeriesAdapter(Context context, List<TvSeries> tvSeriesList) {
+    public TvSeriesAdapter(Context context, List<TvSeriesWrapper> tvSeriesList) {
         mContext = context;
         mTvSeriesList = tvSeriesList;
     }
@@ -50,7 +51,7 @@ public class TvSeriesAdapter extends RecyclerView.Adapter<TvSeriesAdapter.TvSeri
 
     @Override
     public void onBindViewHolder(TvSeriesHolder holder, int index) {
-        TvSeries tvSeries = mTvSeriesList.get(index);
+        TvSeriesWrapper tvSeries = mTvSeriesList.get(index);
         holder.bindTvSeries(tvSeries);
     }
 
@@ -59,13 +60,30 @@ public class TvSeriesAdapter extends RecyclerView.Adapter<TvSeriesAdapter.TvSeri
         return mTvSeriesList.size();
     }
 
+    public void setTvSeriesList(List<TvSeriesWrapper> tvSeriesList) {
+        mTvSeriesList = tvSeriesList;
+    }
+
+    private void removeTvSeriesById(int id) {;
+        for (int i = 0; i < mTvSeriesList.size(); i++) {
+            TvSeriesWrapper tvSeries = mTvSeriesList.get(i);
+            if (tvSeries.getId() == id) {
+                mTvSeriesList.remove(i);
+                break;
+            }
+        }
+    }
+
     public class TvSeriesHolder extends RecyclerView.ViewHolder {
+        private static final String TAG = "TvSeriesHolder";
+        private boolean onBind;
+
         private CheckBox mTrackCheckBox;
         private TextView mNameTextView;
         private TextView mRatingTextView;
         private TextView mYearTextView;
         private ImageView mPosterImageView;
-        private TvSeries mTvSeries;
+        private TvSeriesWrapper mTvSeries;
 
         public TvSeriesHolder(View view) {
             super(view);
@@ -84,7 +102,16 @@ public class TvSeriesAdapter extends RecyclerView.Adapter<TvSeriesAdapter.TvSeri
                     TvSeriesManager tvSeriesManager = TvSeriesManager.get(mContext);
 
                     if (isChecked) {
-                        tvSeriesManager.addTvSeries(mTvSeries);
+                        if (!mTvSeries.isTracked()) {
+                            tvSeriesManager.addTvSeries(mTvSeries);
+                            mTvSeries.setIsTracked(true);
+                        }
+                    } else {
+                        if (!onBind) {
+                            tvSeriesManager.removeTvSeries(mTvSeries);
+                            removeTvSeriesById(mTvSeries.getId());
+                            notifyDataSetChanged();
+                        }
                     }
                 }
             });
@@ -97,7 +124,7 @@ public class TvSeriesAdapter extends RecyclerView.Adapter<TvSeriesAdapter.TvSeri
 
         }
 
-        public void bindTvSeries(TvSeries tvSeries) {
+        public void bindTvSeries(TvSeriesWrapper tvSeries) {
             mTvSeries = tvSeries;
 
             mNameTextView.setText(tvSeries.getName());
@@ -107,7 +134,10 @@ public class TvSeriesAdapter extends RecyclerView.Adapter<TvSeriesAdapter.TvSeri
                     .load("https://image.tmdb.org/t/p/w185/" + tvSeries.getPosterPath())
                     .fit()
                     .into(mPosterImageView);
+            onBind = true;
             mTrackCheckBox.setText("Track");
+            mTrackCheckBox.setChecked(tvSeries.isTracked());
+            onBind = false;
         }
 
         private class GetTvTask extends AsyncTask<Integer, Integer, TvSeries> {
