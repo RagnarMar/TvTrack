@@ -64,14 +64,15 @@ public class TvSeriesAdapter extends RecyclerView.Adapter<TvSeriesAdapter.TvSeri
         mTvSeriesList = tvSeriesList;
     }
 
-    private void removeTvSeriesById(int id) {;
+    private int removeTvSeriesById(int id) {;
         for (int i = 0; i < mTvSeriesList.size(); i++) {
             TvSeriesWrapper tvSeries = mTvSeriesList.get(i);
             if (tvSeries.getId() == id) {
                 mTvSeriesList.remove(i);
-                break;
+                return i;
             }
         }
+        return -1;
     }
 
     public class TvSeriesHolder extends RecyclerView.ViewHolder {
@@ -109,8 +110,10 @@ public class TvSeriesAdapter extends RecyclerView.Adapter<TvSeriesAdapter.TvSeri
                     } else {
                         if (!onBind) {
                             tvSeriesManager.removeTvSeries(mTvSeries);
-                            removeTvSeriesById(mTvSeries.getId());
-                            notifyDataSetChanged();
+                            int position = removeTvSeriesById(mTvSeries.getId());
+                            if (position != -1) {
+                                notifyItemRemoved(position);
+                            }
                         }
                     }
                 }

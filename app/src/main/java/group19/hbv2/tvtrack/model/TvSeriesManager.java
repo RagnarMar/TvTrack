@@ -38,7 +38,7 @@ public class TvSeriesManager {
         List<TvSeriesWrapper> tvSeriesList = new ArrayList<>();
 
         try {
-            cursor.moveToFirst();
+            if (cursor == null || !cursor.moveToFirst()) return tvSeriesList;
             while (!cursor.isAfterLast()) {
                 TvSeriesWrapper tvSeries = cursor.getTvSeries();
                 tvSeriesList.add(tvSeries);
@@ -66,7 +66,13 @@ public class TvSeriesManager {
     public boolean containsTvSeries(TvSeriesWrapper tvSeries) {
         String idString = "" + tvSeries.getId();
         TvSeriesCursorWrapper cursor = query(TvSeriesTable.Cols.ID + " == ?", new String[] { idString });
-        return cursor.getCount() > 0;
+        boolean dbContainsTvSeries = false;
+        try {
+             dbContainsTvSeries = cursor != null && cursor.moveToFirst();
+        } finally {
+            cursor.close();
+        }
+        return dbContainsTvSeries;
     }
 
     private ContentValues getContentValues(TvSeriesWrapper tvSeries) {
