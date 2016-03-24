@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 
 import java.util.List;
 
+import group19.hbv2.tvtrack.model.TvSeriesWrapper;
 import info.movito.themoviedbapi.model.tv.TvSeries;
 
 /**
@@ -23,13 +24,13 @@ public class SearchResultActivity extends Activity {
         setContentView(R.layout.search_list_result);
 
         Intent intent = getIntent();
-        List<TvSeries> tvSeries = ((TvSeriesBundle) intent.getParcelableExtra("SearchResult")).list;
+        TvSeriesBundle bundle = (TvSeriesBundle) intent.getParcelableExtra("SearchResult");
+        List<TvSeriesWrapper> tvSeriesList = TvSeriesWrapper.wrapTvSeriesList(bundle.list, this);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.search_list_recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-
-        mAdapter = new TvSeriesAdapter(this, tvSeries);
+        mAdapter = new TvSeriesAdapter(this, tvSeriesList);
         mRecyclerView.setAdapter(mAdapter);
     }
 }

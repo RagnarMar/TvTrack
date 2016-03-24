@@ -26,7 +26,9 @@ public class TvSeriesDbHelper extends SQLiteOpenHelper {
                         " _id integer primary key autoincrement, " +
                         TvSeriesTable.Cols.ID + " not null unique, " +
                         TvSeriesTable.Cols.NAME + ", " +
-                        TvSeriesTable.Cols.RATING +
+                        TvSeriesTable.Cols.RATING + ", " +
+                        TvSeriesTable.Cols.FIRST_AIR_DATE + ", " +
+                        TvSeriesTable.Cols.POSTER_PATH +
                 ");"
         );
 
