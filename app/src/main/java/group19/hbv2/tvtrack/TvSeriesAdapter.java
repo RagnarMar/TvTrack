@@ -1,5 +1,6 @@
 package group19.hbv2.tvtrack;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -29,6 +30,8 @@ import group19.hbv2.tvtrack.model.TvSeriesWrapper;
 import info.movito.themoviedbapi.TmdbApi;
 import info.movito.themoviedbapi.model.Artwork;
 import info.movito.themoviedbapi.model.tv.TvSeries;
+
+import group19.hbv2.tvtrack.NavigationActivity;
 
 /**
  * Created by agustis on 20.3.2016.
@@ -77,6 +80,7 @@ public class TvSeriesAdapter extends RecyclerView.Adapter<TvSeriesAdapter.TvSeri
 
     public class TvSeriesHolder extends RecyclerView.ViewHolder {
         private static final String TAG = "TvSeriesHolder";
+        private final String NavigationActivityString = NavigationActivity.class.getSimpleName();
         private boolean onBind;
 
         private CheckBox mTrackCheckBox;
@@ -109,10 +113,15 @@ public class TvSeriesAdapter extends RecyclerView.Adapter<TvSeriesAdapter.TvSeri
                         }
                     } else {
                         if (!onBind) {
+                            mTvSeries.setIsTracked(false);
                             tvSeriesManager.removeTvSeries(mTvSeries);
-                            int position = removeTvSeriesById(mTvSeries.getId());
-                            if (position != -1) {
-                                notifyItemRemoved(position);
+
+                            String activityString = ((Activity) mContext).getClass().getSimpleName();
+                            if (NavigationActivityString.equals(activityString)) {
+                                int position = removeTvSeriesById(mTvSeries.getId());
+                                if (position != -1) {
+                                    notifyItemRemoved(position);
+                                }
                             }
                         }
                     }
