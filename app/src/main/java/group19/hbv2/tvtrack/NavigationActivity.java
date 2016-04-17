@@ -24,6 +24,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.appindexing.Action;
@@ -159,13 +160,9 @@ public class NavigationActivity extends AppCompatActivity
 
         if (id == R.id.nav_search) {
             doSearchShow();
-        } else if (id == R.id.nav_popular) {
-            Context context = getApplicationContext();
-            CharSequence text = "Hello popular!";
-            int duration = Toast.LENGTH_SHORT;
 
-            Toast toast = Toast.makeText(context, text, duration);
-            toast.show();
+        } else if (id == R.id.nav_popular) {
+            new PopularTask().execute();
 
         } else if (id == R.id.nav_genres) {
             Context context = getApplicationContext();
@@ -243,6 +240,7 @@ public class NavigationActivity extends AppCompatActivity
             TvSeriesBundle tvBundle = new TvSeriesBundle(result);
             final String KEY = getResources().getString(R.string.key_tv_search);
             Bundle b = new Bundle();
+            b.putString("TITLE", "Search Results");
             b.putParcelable(KEY, tvBundle);
             SearchResultFragment fragment = new SearchResultFragment();
             fragment.setArguments(b);
@@ -253,6 +251,33 @@ public class NavigationActivity extends AppCompatActivity
                     .commit();
 
       }
+    }
+
+    private class PopularTask extends AsyncTask<Void, Void, List<TvSeries>> {
+
+        @Override
+        protected List<TvSeries> doInBackground(Void... params) {
+            TmdbApi api = new TmdbApi("890f633bdd8840cfdedc2b942c601007");
+            List<TvSeries> result = api.getTvSeries().getPopular("en", 0).getResults();
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(List<TvSeries> result) {
+            TvSeriesBundle tvBundle = new TvSeriesBundle(result);
+            final String KEY = getResources().getString(R.string.key_tv_search);
+            Bundle b = new Bundle();
+            b.putParcelable(KEY, tvBundle);
+            b.putString("TITLE", "Popular");
+            SearchResultFragment fragment = new SearchResultFragment();
+            fragment.setArguments(b);
+
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.frame, fragment)
+                    .addToBackStack(fragment.getClass().getName())
+                    .commit();
+
+        }
     }
 
 }
