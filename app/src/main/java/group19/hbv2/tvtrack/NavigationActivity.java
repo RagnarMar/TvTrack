@@ -30,12 +30,14 @@ import android.widget.Toast;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.common.collect.Iterables;
 
 import java.util.List;
 
 import group19.hbv2.tvtrack.model.TvSeriesManager;
 import group19.hbv2.tvtrack.model.TvSeriesWrapper;
 import info.movito.themoviedbapi.TmdbApi;
+import info.movito.themoviedbapi.model.config.Timezone;
 import info.movito.themoviedbapi.model.tv.TvSeries;
 
 public class NavigationActivity extends AppCompatActivity
@@ -164,13 +166,8 @@ public class NavigationActivity extends AppCompatActivity
         } else if (id == R.id.nav_popular) {
             new PopularTask().execute();
 
-        } else if (id == R.id.nav_genres) {
-            Context context = getApplicationContext();
-            CharSequence text = "Hello genres!";
-            int duration = Toast.LENGTH_SHORT;
-
-            Toast toast = Toast.makeText(context, text, duration);
-            toast.show();
+        } else if (id == R.id.nav_airing) {
+            new AiringTask().execute();
 
         } else if (id == R.id.nav_tracker) {
             getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
@@ -269,6 +266,35 @@ public class NavigationActivity extends AppCompatActivity
             Bundle b = new Bundle();
             b.putParcelable(KEY, tvBundle);
             b.putString("TITLE", "Popular");
+            SearchResultFragment fragment = new SearchResultFragment();
+            fragment.setArguments(b);
+
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.frame, fragment)
+                    .addToBackStack(fragment.getClass().getName())
+                    .commit();
+
+        }
+    }
+
+    private class AiringTask extends AsyncTask<Void, Void, List<TvSeries>> {
+
+        @Override
+        protected List<TvSeries> doInBackground(Void... params) {
+            TmdbApi api = new TmdbApi("890f633bdd8840cfdedc2b942c601007");
+
+            info.movito.themoviedbapi.model.config.Timezone tz = new info.movito.themoviedbapi.model.config.Timezone("GMT", "UK");
+            List<TvSeries> result = api.getTvSeries().getAiringToday("en", 0, tz).getResults();
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(List<TvSeries> result) {
+            TvSeriesBundle tvBundle = new TvSeriesBundle(result);
+            final String KEY = getResources().getString(R.string.key_tv_search);
+            Bundle b = new Bundle();
+            b.putParcelable(KEY, tvBundle);
+            b.putString("TITLE", "Airing Today");
             SearchResultFragment fragment = new SearchResultFragment();
             fragment.setArguments(b);
 

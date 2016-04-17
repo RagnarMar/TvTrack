@@ -38,6 +38,9 @@ public class TvSeriesFragment extends Fragment {
         TextView tvSeasons = (TextView) view.findViewById(R.id.seriesSeasons);
         tvSeasons.setText("Number of seasons: " + show.getNumberOfSeasons());
 
+        TextView tvEpisodes = (TextView) view.findViewById(R.id.seriesEpisodes);
+        tvEpisodes.setText("Episodes " + show.getNumberOfEpisodes());
+
         TextView tvOverview = (TextView) view.findViewById(R.id.seriesOverview);
         tvOverview.setText(show.getOverview());
 

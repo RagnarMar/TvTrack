@@ -51,6 +51,16 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Dummy - seasons"
                 android:id="@+id/seriesSeasons"
+                android:paddingBottom="5dp"
+                android:paddingLeft="3dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Dummy - episodes"
+                android:textColor="#0000FF"
+                android:id="@+id/seriesEpisodes"
                 android:paddingLeft="3dp"/>
 
         </LinearLayout>
