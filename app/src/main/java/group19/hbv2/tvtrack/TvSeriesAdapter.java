@@ -1,17 +1,14 @@
 package group19.hbv2.tvtrack;
 
+import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -19,15 +16,12 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import java.io.InputStream;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 import group19.hbv2.tvtrack.model.TvSeriesManager;
 import group19.hbv2.tvtrack.model.TvSeriesWrapper;
 import info.movito.themoviedbapi.TmdbApi;
-import info.movito.themoviedbapi.model.Artwork;
 import info.movito.themoviedbapi.model.tv.TvSeries;
 
 /**
@@ -64,18 +58,20 @@ public class TvSeriesAdapter extends RecyclerView.Adapter<TvSeriesAdapter.TvSeri
         mTvSeriesList = tvSeriesList;
     }
 
-    private void removeTvSeriesById(int id) {;
+    private int removeTvSeriesById(int id) {;
         for (int i = 0; i < mTvSeriesList.size(); i++) {
             TvSeriesWrapper tvSeries = mTvSeriesList.get(i);
             if (tvSeries.getId() == id) {
                 mTvSeriesList.remove(i);
-                break;
+                return i;
             }
         }
+        return -1;
     }
 
     public class TvSeriesHolder extends RecyclerView.ViewHolder {
         private static final String TAG = "TvSeriesHolder";
+        private final String NavigationActivityString = NavigationActivity.class.getSimpleName();
         private boolean onBind;
 
         private CheckBox mTrackCheckBox;
@@ -108,9 +104,16 @@ public class TvSeriesAdapter extends RecyclerView.Adapter<TvSeriesAdapter.TvSeri
                         }
                     } else {
                         if (!onBind) {
+                            mTvSeries.setIsTracked(false);
                             tvSeriesManager.removeTvSeries(mTvSeries);
-                            removeTvSeriesById(mTvSeries.getId());
-                            notifyDataSetChanged();
+
+                            String activityString = ((Activity) mContext).getClass().getSimpleName();
+                            if (NavigationActivityString.equals(activityString)) {
+                                int position = removeTvSeriesById(mTvSeries.getId());
+                                if (position != -1) {
+                                    notifyItemRemoved(position);
+                                }
+                            }
                         }
                     }
                 }
@@ -154,9 +157,19 @@ public class TvSeriesAdapter extends RecyclerView.Adapter<TvSeriesAdapter.TvSeri
             protected void onPostExecute(TvSeries result) {
                 List<TvSeries> tvList = new ArrayList<TvSeries>();
                 tvList.add(result);
-                TvSeriesBundle bundle = new TvSeriesBundle(tvList);
-                Intent intent = TvInfoActivity.newIntent(mContext, bundle);
-                mContext.startActivity(intent);
+                TvSeriesBundle tvBundle = new TvSeriesBundle(tvList);
+
+                final String KEY = mContext.getResources().getString(R.string.key_tv_series);
+                Bundle b = new Bundle();
+                b.putParcelable(KEY, tvBundle);
+                TvSeriesFragment fragment = new TvSeriesFragment();
+                fragment.setArguments(b);
+
+                ((FragmentActivity)mContext).getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.frame, fragment)
+                        .addToBackStack(fragment.getClass().getName())
+                        .commit();
+
             }
         }
     }

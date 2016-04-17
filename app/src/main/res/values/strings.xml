@@ -8,4 +8,6 @@
 
     <string name="action_search">Search</string>
 
+    <string name="key_tv_series">group19.hbv2.tvtrack.TvInfoFragment.tvSeriesKey</string>
+    <string name="key_tv_search">group19.hbv2.tvtrack.TvInfoFragment.tvSearchKey</string>
 </resources>

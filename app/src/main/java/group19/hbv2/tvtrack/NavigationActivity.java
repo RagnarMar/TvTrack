@@ -3,12 +3,13 @@ package group19.hbv2.tvtrack;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -29,7 +30,6 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import group19.hbv2.tvtrack.model.TvSeriesManager;
@@ -71,8 +71,7 @@ public class NavigationActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                doSearchShow();
             }
         });
 
@@ -129,6 +128,27 @@ public class NavigationActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    void doSearchShow(){
+        // Get the search view and user text input field
+        View view = LayoutInflater.from(this).inflate(R.layout.dialog_navigation, null);
+        final EditText input = (EditText)view.findViewById(R.id.search_input);
+
+        //Create search dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(view);
+        builder.setTitle("Search");
+        builder.setPositiveButton(R.string.action_search, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+
+                //Run Search AsyncTask bc we don't want any processing in UI thread
+                new SearchTask().execute(input.getText().toString());
+            }
+        });
+
+        //Display search dialog on screen
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -137,28 +157,7 @@ public class NavigationActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_search) {
-
-            // Get the search view and user text input field
-            View view = LayoutInflater.from(this).inflate(R.layout.dialog_navigation, null);
-            final EditText input = (EditText)view.findViewById(R.id.search_input);
-
-            //Create search dialog
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setView(view);
-            builder.setTitle("Search");
-            builder.setPositiveButton(R.string.action_search, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-
-                    //Run Search AsyncTask bc we don't want any processing in UI thread
-                    new SearchTask().execute(input.getText().toString());
-                }
-            });
-
-            //Display search dialog on screen
-            AlertDialog dialog = builder.create();
-            dialog.show();
-
-
+            doSearchShow();
         } else if (id == R.id.nav_popular) {
             Context context = getApplicationContext();
             CharSequence text = "Hello popular!";
@@ -244,16 +243,19 @@ public class NavigationActivity extends AppCompatActivity
 
         @Override
         protected void onPostExecute(List<TvSeries> result) {
-            Intent search = new Intent();
-            search.setClass(getApplicationContext(), SearchResultActivity.class);
-            TvSeriesBundle bundle = new TvSeriesBundle(result);
-            search.putExtra("SearchResult", bundle);
-            startActivity(search);
+            TvSeriesBundle tvBundle = new TvSeriesBundle(result);
+            final String KEY = getResources().getString(R.string.key_tv_search);
+            Bundle b = new Bundle();
+            b.putParcelable(KEY, tvBundle);
+            SearchResultFragment fragment = new SearchResultFragment();
+            fragment.setArguments(b);
+
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.frame, fragment)
+                    .addToBackStack(fragment.getClass().getName())
+                    .commit();
+
       }
     }
-
-
-
-
 
 }
