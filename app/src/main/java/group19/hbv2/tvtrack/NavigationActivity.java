@@ -103,6 +103,7 @@ public class NavigationActivity extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
+            onResume();
         }
     }
 
@@ -175,12 +176,8 @@ public class NavigationActivity extends AppCompatActivity
             toast.show();
 
         } else if (id == R.id.nav_tracker) {
-            Context context = getApplicationContext();
-            CharSequence text = "Hello tracker!";
-            int duration = Toast.LENGTH_SHORT;
-
-            Toast toast = Toast.makeText(context, text, duration);
-            toast.show();
+            getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            onResume();
 
         } else if (id == R.id.nav_share) {
 

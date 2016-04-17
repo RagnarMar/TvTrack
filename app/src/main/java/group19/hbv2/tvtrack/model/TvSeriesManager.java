@@ -15,9 +15,7 @@ import info.movito.themoviedbapi.model.tv.TvSeries;
 
 import group19.hbv2.tvtrack.database.TvSeriesDbSchema.TvSeriesTable;
 
-/**
- * Created by Jóhannes Þorkell Tómasson on 23.3.2016, jtht2@hi.is.
- */
+
 public class TvSeriesManager {
     private static final String TAG = "TvSeriesManager";
     private static TvSeriesManager mManager;

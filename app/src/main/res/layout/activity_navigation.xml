@@ -16,7 +16,7 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="58dp">
+        android:paddingTop="57dp">
 
     </android.support.v7.widget.RecyclerView>
 

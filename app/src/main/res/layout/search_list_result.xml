@@ -3,13 +3,13 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:weightSum="1"
-    android:paddingTop="58dp">
+    android:paddingTop="57dp">
 
     <TextView
         android:layout_width="369dp"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Results"
+        android:text="Search Results"
         android:id="@+id/resultName"
         android:layout_gravity="center_horizontal"
         android:layout_weight="0.02"

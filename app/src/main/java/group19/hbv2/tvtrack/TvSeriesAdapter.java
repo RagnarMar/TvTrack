@@ -24,9 +24,7 @@ import group19.hbv2.tvtrack.model.TvSeriesWrapper;
 import info.movito.themoviedbapi.TmdbApi;
 import info.movito.themoviedbapi.model.tv.TvSeries;
 
-/**
- * Created by agustis on 20.3.2016.
- */
+
 public class TvSeriesAdapter extends RecyclerView.Adapter<TvSeriesAdapter.TvSeriesHolder> {
     private List<TvSeriesWrapper> mTvSeriesList;
     private Context mContext;

@@ -11,9 +11,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import info.movito.themoviedbapi.model.tv.TvSeries;
 
-/**
- * Created by agustis on 20.3.2016.
- */
+
 public class TvSeriesFragment extends Fragment {
 
     private RecyclerView mRecyclerView;

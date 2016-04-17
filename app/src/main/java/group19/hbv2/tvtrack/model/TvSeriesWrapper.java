@@ -9,9 +9,6 @@ import java.util.List;
 import group19.hbv2.tvtrack.database.TvSeriesDbSchema;
 import info.movito.themoviedbapi.model.tv.TvSeries;
 
-/**
- * Created by Jóhannes Þorkell Tómasson on 24.3.2016, jtht2@hi.is.
- */
 public class TvSeriesWrapper {
     private int id;
     private String name;

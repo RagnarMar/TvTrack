@@ -8,9 +8,7 @@ import group19.hbv2.tvtrack.TvSeriesAdapter;
 
 import group19.hbv2.tvtrack.database.TvSeriesDbSchema.TvSeriesTable;
 
-/**
- * Created by Jóhannes Þorkell Tómasson on 23.3.2016, jtht2@hi.is.
- */
+
 public class TvSeriesDbHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "tvSeries.db";
     private static final int VERSION = 1;

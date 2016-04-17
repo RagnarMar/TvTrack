@@ -7,9 +7,7 @@ import java.util.List;
 
 import info.movito.themoviedbapi.model.tv.TvSeries;
 
-/**
- * Created by agustis on 19.3.2016.
- */
+
 public class TvSeriesBundle implements Parcelable{
     public List<TvSeries> list;
 

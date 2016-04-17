@@ -1,8 +1,6 @@
 package group19.hbv2.tvtrack.database;
 
-/**
- * Created by Jóhannes Þorkell Tómasson on 23.3.2016, jtht2@hi.is.
- */
+
 public class TvSeriesDbSchema {
 
     public class TvSeriesTable {

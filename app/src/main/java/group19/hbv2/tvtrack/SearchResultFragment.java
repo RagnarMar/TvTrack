@@ -11,11 +11,8 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import group19.hbv2.tvtrack.model.TvSeriesWrapper;
-import info.movito.themoviedbapi.model.tv.TvSeries;
 
-/**
- * Created by agustis on 19.3.2016.
- */
+
 public class SearchResultFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private TvSeriesAdapter mAdapter;
