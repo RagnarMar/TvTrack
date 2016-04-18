@@ -12,9 +12,10 @@
             android:title="Popular" />
         <item
             android:id="@+id/nav_airing"
-            android:icon="@drawable/ic_action_labels"
+            android:icon="@drawable/ic_action_event"
             android:title="Airing Today" />
         <item
+
             android:id="@+id/nav_tracker"
             android:icon="@drawable/ic_action_view_as_list"
             android:title="Tracker" />
