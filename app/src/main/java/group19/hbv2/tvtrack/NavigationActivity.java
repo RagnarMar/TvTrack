@@ -24,17 +24,20 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.common.collect.Iterables;
 
 import java.util.List;
 
 import group19.hbv2.tvtrack.model.TvSeriesManager;
 import group19.hbv2.tvtrack.model.TvSeriesWrapper;
 import info.movito.themoviedbapi.TmdbApi;
+import info.movito.themoviedbapi.model.config.Timezone;
 import info.movito.themoviedbapi.model.tv.TvSeries;
 
 public class NavigationActivity extends AppCompatActivity
@@ -103,6 +106,7 @@ public class NavigationActivity extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
+            onResume();
         }
     }
 
@@ -158,29 +162,16 @@ public class NavigationActivity extends AppCompatActivity
 
         if (id == R.id.nav_search) {
             doSearchShow();
+
         } else if (id == R.id.nav_popular) {
-            Context context = getApplicationContext();
-            CharSequence text = "Hello popular!";
-            int duration = Toast.LENGTH_SHORT;
+            new PopularTask().execute();
 
-            Toast toast = Toast.makeText(context, text, duration);
-            toast.show();
-
-        } else if (id == R.id.nav_genres) {
-            Context context = getApplicationContext();
-            CharSequence text = "Hello genres!";
-            int duration = Toast.LENGTH_SHORT;
-
-            Toast toast = Toast.makeText(context, text, duration);
-            toast.show();
+        } else if (id == R.id.nav_airing) {
+            new AiringTask().execute();
 
         } else if (id == R.id.nav_tracker) {
-            Context context = getApplicationContext();
-            CharSequence text = "Hello tracker!";
-            int duration = Toast.LENGTH_SHORT;
-
-            Toast toast = Toast.makeText(context, text, duration);
-            toast.show();
+            getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            onResume();
 
         } else if (id == R.id.nav_share) {
 
@@ -246,6 +237,7 @@ public class NavigationActivity extends AppCompatActivity
             TvSeriesBundle tvBundle = new TvSeriesBundle(result);
             final String KEY = getResources().getString(R.string.key_tv_search);
             Bundle b = new Bundle();
+            b.putString("TITLE", "Search Results");
             b.putParcelable(KEY, tvBundle);
             SearchResultFragment fragment = new SearchResultFragment();
             fragment.setArguments(b);
@@ -256,6 +248,62 @@ public class NavigationActivity extends AppCompatActivity
                     .commit();
 
       }
+    }
+
+    private class PopularTask extends AsyncTask<Void, Void, List<TvSeries>> {
+
+        @Override
+        protected List<TvSeries> doInBackground(Void... params) {
+            TmdbApi api = new TmdbApi("890f633bdd8840cfdedc2b942c601007");
+            List<TvSeries> result = api.getTvSeries().getPopular("en", 0).getResults();
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(List<TvSeries> result) {
+            TvSeriesBundle tvBundle = new TvSeriesBundle(result);
+            final String KEY = getResources().getString(R.string.key_tv_search);
+            Bundle b = new Bundle();
+            b.putParcelable(KEY, tvBundle);
+            b.putString("TITLE", "Popular");
+            SearchResultFragment fragment = new SearchResultFragment();
+            fragment.setArguments(b);
+
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.frame, fragment)
+                    .addToBackStack(fragment.getClass().getName())
+                    .commit();
+
+        }
+    }
+
+    private class AiringTask extends AsyncTask<Void, Void, List<TvSeries>> {
+
+        @Override
+        protected List<TvSeries> doInBackground(Void... params) {
+            TmdbApi api = new TmdbApi("890f633bdd8840cfdedc2b942c601007");
+
+            info.movito.themoviedbapi.model.config.Timezone tz = new info.movito.themoviedbapi.model.config.Timezone("GMT", "UK");
+            List<TvSeries> result = api.getTvSeries().getAiringToday("en", 0, tz).getResults();
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(List<TvSeries> result) {
+            TvSeriesBundle tvBundle = new TvSeriesBundle(result);
+            final String KEY = getResources().getString(R.string.key_tv_search);
+            Bundle b = new Bundle();
+            b.putParcelable(KEY, tvBundle);
+            b.putString("TITLE", "Airing Today");
+            SearchResultFragment fragment = new SearchResultFragment();
+            fragment.setArguments(b);
+
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.frame, fragment)
+                    .addToBackStack(fragment.getClass().getName())
+                    .commit();
+
+        }
     }
 
 }

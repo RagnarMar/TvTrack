@@ -7,9 +7,7 @@ import group19.hbv2.tvtrack.database.TvSeriesDbSchema.TvSeriesTable;
 import group19.hbv2.tvtrack.model.TvSeriesWrapper;
 import info.movito.themoviedbapi.model.tv.TvSeries;
 
-/**
- * Created by Jóhannes Þorkell Tómasson on 23.3.2016, jtht2@hi.is.
- */
+
 public class TvSeriesCursorWrapper extends CursorWrapper {
 
     public TvSeriesCursorWrapper(Cursor cursor) {

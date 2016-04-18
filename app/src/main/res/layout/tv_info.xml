@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="58dp">
+    android:paddingTop="57dp">
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="wrap_content"
@@ -51,6 +51,16 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Dummy - seasons"
                 android:id="@+id/seriesSeasons"
+                android:paddingBottom="5dp"
+                android:paddingLeft="3dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Dummy - episodes"
+                android:textColor="#0000FF"
+                android:id="@+id/seriesEpisodes"
                 android:paddingLeft="3dp"/>
 
         </LinearLayout>

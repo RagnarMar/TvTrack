@@ -7,15 +7,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.List;
 
 import group19.hbv2.tvtrack.model.TvSeriesWrapper;
-import info.movito.themoviedbapi.model.tv.TvSeries;
 
-/**
- * Created by agustis on 19.3.2016.
- */
+
 public class SearchResultFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private TvSeriesAdapter mAdapter;
@@ -29,6 +27,11 @@ public class SearchResultFragment extends Fragment {
         mRecyclerView = (RecyclerView) getActivity().findViewById(R.id.navigation_recycler_view);
         mRecyclerView.setVisibility(View.GONE);
 
+
+        String title = (String) getArguments().getString("TITLE");
+
+        TextView tv = (TextView) view.findViewById(R.id.resultName);
+        tv.setText(title);
 
         final String KEY = getResources().getString(R.string.key_tv_search);
         TvSeriesBundle bundle = (TvSeriesBundle)getArguments().getParcelable(KEY);

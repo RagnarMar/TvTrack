@@ -11,9 +11,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import info.movito.themoviedbapi.model.tv.TvSeries;
 
-/**
- * Created by agustis on 20.3.2016.
- */
+
 public class TvSeriesFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
@@ -39,6 +37,9 @@ public class TvSeriesFragment extends Fragment {
 
         TextView tvSeasons = (TextView) view.findViewById(R.id.seriesSeasons);
         tvSeasons.setText("Number of seasons: " + show.getNumberOfSeasons());
+
+        TextView tvEpisodes = (TextView) view.findViewById(R.id.seriesEpisodes);
+        tvEpisodes.setText("Episodes " + show.getNumberOfEpisodes());
 
         TextView tvOverview = (TextView) view.findViewById(R.id.seriesOverview);
         tvOverview.setText(show.getOverview());

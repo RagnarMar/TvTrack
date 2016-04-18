@@ -11,9 +11,9 @@
             android:icon="@drawable/ic_action_important"
             android:title="Popular" />
         <item
-            android:id="@+id/nav_genres"
+            android:id="@+id/nav_airing"
             android:icon="@drawable/ic_action_labels"
-            android:title="Genres" />
+            android:title="Airing Today" />
         <item
             android:id="@+id/nav_tracker"
             android:icon="@drawable/ic_action_view_as_list"
